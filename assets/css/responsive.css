@@ -320,20 +320,14 @@
 		padding-top: 80px;
 		padding-bottom: 60px;
 	}
-	.portfolio-box .portfolio-item {
-		padding: 25px 15px 0 15px;
+	:root {
+		--portfolio-row-height: 230px;
+		--portfolio-card-gap: 16px;
+		--portfolio-row-gap: 18px;
 	}
-	.portfolio-box .content-box {
-		width: calc(100% - 30px);
-		padding: 15px 30px 15px 15px;
-	}
-	.portfolio-box .portfolio-item .content-box .portfolio-title {
-		font-size: 25px;
-		margin: 0;
-	}
-	.portfolio-box .portfolio-item .content-box i {
-		font-size: 15px;
-		right: 15px;
+	.portfolio-showcase {
+		-webkit-mask-image: -webkit-linear-gradient(left, transparent 0%, #000 36px, #000 calc(100% - 36px), transparent 100%);
+		mask-image: linear-gradient(to right, transparent 0%, #000 36px, #000 calc(100% - 36px), transparent 100%);
 	}
 	.popup_modal_content .portfolio_info {
 		padding: 0 25px;
@@ -692,28 +686,30 @@
 		font-size: 14px;
 		padding: 10px 6px;
 	}
-	.portfolio-box {
-		padding-top: 40px;
+	:root {
+		--portfolio-row-height: 185px;
+		--portfolio-card-gap: 12px;
+		--portfolio-row-gap: 14px;
 	}
-	.portfolio-box .portfolio-sizer {
-		width: 100%;
+	.portfolio-section {
+		padding-top: 60px;
+		padding-bottom: 50px;
 	}
-	.portfolio-box .portfolio-item {
-		width: 100%;
-		padding: 25px 15px 0 15px;
-		margin-bottom: 30px;
+	.portfolio-showcase-container {
+		margin-top: 30px;
 	}
-	.portfolio-box .content-box {
-		width: calc(100% - 30px);
-		padding: 15px 30px 15px 15px;
+	.portfolio-showcase {
+		-webkit-mask-image: -webkit-linear-gradient(left, transparent 0%, #000 16px, #000 calc(100% - 16px), transparent 100%);
+		mask-image: linear-gradient(to right, transparent 0%, #000 16px, #000 calc(100% - 16px), transparent 100%);
 	}
-	.portfolio-box .portfolio-item .content-box .portfolio-title {
-		font-size: 25px;
-		margin: 0;
+	.portfolio-card .portfolio-meta .meta-desc {
+		display: none;
 	}
-	.portfolio-box .portfolio-item .content-box i {
-		font-size: 15px;
-		right: 15px;
+	.portfolio-card .portfolio-meta .meta-title {
+		font-size: 13.5px;
+	}
+	.portfolio-card.format-9-16 .portfolio-meta .meta-title {
+		font-size: 11.5px;
 	}
 	.popup_modal_content .portfolio_info {
 		padding: 0 15px;
