@@ -20,7 +20,6 @@ Author: Theme-Junction
 // Testimonial Carousel
 // Nice Select
 // ALL Popup
-// Preloader
 // Sidebar Hover BG Color
 // Services Hover BG
 // Portfolio Filter BG Color
@@ -252,19 +251,15 @@ Author: Theme-Junction
 		});
 		projectsMap["recession2"] = projectsMap["twi"];
 
-		function bulkPlayVideos($container) {
-			var $target = $container || $("#portfolio-showcase");
-			$target.find("video").each(function () {
-				var v = this;
-				v.muted = true;
-				v.defaultMuted = true;
-				v.loop = true;
-				v.playsInline = true;
-				var playPromise = v.play();
-				if (playPromise !== undefined && playPromise.catch) {
-					playPromise.catch(function () {});
+		var activePreviewVideo = null;
+
+		function pauseAllPreviewVideos() {
+			$("#portfolio-showcase video").each(function () {
+				if (!this.paused) {
+					this.pause();
 				}
 			});
+			activePreviewVideo = null;
 		}
 
 		function updateShowcaseGrid(filterVal) {
@@ -291,7 +286,7 @@ Author: Theme-Junction
 					$(".portfolio-marquee-row").removeClass("is-paused");
 				}
 
-				bulkPlayVideos($showcase);
+				pauseAllPreviewVideos();
 				$showcase.removeClass("is-switching");
 			}, 180);
 		}
@@ -304,31 +299,48 @@ Author: Theme-Junction
 			updateShowcaseGrid(filterVal);
 		});
 
-		// Hover interaction pauses horizontal marquee motion so user can focus on the card
+		// Hover interaction: play muted preview ONLY on hover; pause when cursor leaves
 		$("#portfolio-showcase")
 			.on("mouseenter", ".portfolio-card", function () {
-				if (!$("#portfolio-video-dialog").hasClass("is-open")) {
-					$(this).closest(".portfolio-marquee-row").addClass("is-paused");
+				if ($("#portfolio-video-dialog").hasClass("is-open")) {
+					return;
+				}
+				$(this).closest(".portfolio-marquee-row").addClass("is-paused");
+
+				// Only play hover preview on devices capable of hovering (prevents touch/mobile autoplay)
+				if (window.matchMedia && !window.matchMedia("(hover: hover)").matches) {
+					return;
+				}
+
+				var video = $(this).find("video")[0];
+				if (!video) return;
+
+				// Pause any previously playing preview so there is never multiple playing simultaneously
+				pauseAllPreviewVideos();
+
+				video.muted = true;
+				video.defaultMuted = true;
+				video.playsInline = true;
+				activePreviewVideo = video;
+
+				var playPromise = video.play();
+				if (playPromise !== undefined && playPromise.catch) {
+					playPromise.catch(function () {});
 				}
 			})
 			.on("mouseleave", ".portfolio-card", function () {
 				if (!$("#portfolio-video-dialog").hasClass("is-open")) {
 					$(this).closest(".portfolio-marquee-row").removeClass("is-paused");
 				}
-			});
 
-		// Initial Bulk Autoplay Activation
-		bulkPlayVideos($("#portfolio-showcase"));
-		$(window).on("load scroll", function () {
-			if (!$("#portfolio-video-dialog").hasClass("is-open")) {
-				bulkPlayVideos($("#portfolio-showcase"));
-			}
-		});
-		$(document).one("click touchstart", function () {
-			if (!$("#portfolio-video-dialog").hasClass("is-open")) {
-				bulkPlayVideos($("#portfolio-showcase"));
-			}
-		});
+				var video = $(this).find("video")[0];
+				if (video) {
+					video.pause();
+				}
+				if (activePreviewVideo === video) {
+					activePreviewVideo = null;
+				}
+			});
 
 		// Video Dialog / Lightbox Logic
 		var activeTriggerCard = null;
@@ -351,9 +363,7 @@ Author: Theme-Junction
 			activeTriggerCard = $triggerElement || null;
 
 			// Stop/pause gallery previews and pause marquee movement
-			$("#portfolio-showcase video").each(function () {
-				this.pause();
-			});
+			pauseAllPreviewVideos();
 			$(".portfolio-marquee-row").addClass("is-paused");
 
 			// Lock page scroll
@@ -419,10 +429,9 @@ Author: Theme-Junction
 				} catch (err) {}
 			}
 
-			// Resume portfolio gallery movement and autoplay after a short delay
+			// Resume portfolio gallery movement after a short delay
 			setTimeout(function () {
 				if (!$("#portfolio-video-dialog").hasClass("is-open")) {
-					bulkPlayVideos($("#portfolio-showcase"));
 					$(".portfolio-marquee-row").removeClass("is-paused");
 				}
 			}, 400);
@@ -649,43 +658,10 @@ Author: Theme-Junction
 		});
 		wow.init();
 
-		/*------------------------------------------------------
-  	/  Preloader
-  	/------------------------------------------------------*/
-		const svg = document.getElementById("preloaderSvg");
 		const svgText = document.querySelector(
 			".hero-section .intro_text svg text"
 		);
-		const tl = gsap.timeline({
-			onComplete: startStrokeAnimation,
-		});
-		const curve = "M0 502S175 272 500 272s500 230 500 230V0H0Z";
-		const flat = "M0 2S175 1 500 1s500 1 500 1V0H0Z";
-
-		tl.to(".preloader-heading .load-text , .preloader-heading .cont", {
-			delay: 1.5,
-			y: -100,
-			opacity: 0,
-		});
-		tl.to(svg, {
-			duration: 0.5,
-			attr: { d: curve },
-			ease: "power2.easeIn",
-		}).to(svg, {
-			duration: 0.5,
-			attr: { d: flat },
-			ease: "power2.easeOut",
-		});
-		tl.to(".preloader", {
-			y: -1500,
-		});
-		tl.to(".preloader", {
-			zIndex: -1,
-			display: "none",
-		});
-
-		function startStrokeAnimation() {
-			// Add a class or directly apply styles to trigger the stroke animation
+		if (svgText) {
 			svgText.classList.add("animate-stroke");
 		}
 
