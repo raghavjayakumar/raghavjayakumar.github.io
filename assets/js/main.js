@@ -94,7 +94,7 @@ Author: Theme-Junction
 		});
 
 		/*------------------------------------------------------
-	/  Two-Row Horizontally Moving Creative Showcase
+	/  My Recent Works: Long Form (3x3 Grid Carousel) & Short Form (Single Row)
 	/------------------------------------------------------*/
 		var longFormProjects = [
 			{
@@ -118,26 +118,6 @@ Author: Theme-Junction
 				posterSrc: "assets/img/portfolio/thumbnails/long%20form%202.jpg"
 			},
 			{
-				id: "burn",
-				title: "Burn – Cinematic Narrative",
-				category: "Narrative & Sound Design",
-				desc: "Dramatic color grading and layered audio",
-				format: "format-16-9",
-				categories: ["long-form"],
-				videoSrc: "assets/img/portfolio/Burn.mp4",
-				posterSrc: "assets/img/portfolio/thumbnails/Burn.jpg"
-			},
-			{
-				id: "mo",
-				title: "Creator Odyssey Branding",
-				category: "Channel Identity",
-				desc: "3D character animation and UI motion",
-				format: "format-16-9",
-				categories: ["long-form"],
-				videoSrc: "assets/img/portfolio/Mo.mp4",
-				posterSrc: "assets/img/portfolio/thumbnails/Mo.jpg"
-			},
-			{
 				id: "sim",
 				title: "Simon Squibb Conversation",
 				category: "Long-Form Interview",
@@ -148,14 +128,14 @@ Author: Theme-Junction
 				posterSrc: "assets/img/portfolio/thumbnails/Sim.jpg"
 			},
 			{
-				id: "gif",
-				title: "Retail Investors Movement",
-				category: "Financial Motion",
-				desc: "Clean corporate typography and grid design",
+				id: "burn",
+				title: "Burn – Cinematic Narrative",
+				category: "Narrative & Sound Design",
+				desc: "Dramatic color grading and layered audio",
 				format: "format-16-9",
 				categories: ["long-form"],
-				videoSrc: "assets/img/portfolio/GIF.mp4",
-				posterSrc: "assets/img/portfolio/thumbnails/GIF.jpg"
+				videoSrc: "assets/img/portfolio/Burn.mp4",
+				posterSrc: "assets/img/portfolio/thumbnails/Burn.jpg"
 			},
 			{
 				id: "skyfall",
@@ -176,15 +156,45 @@ Author: Theme-Junction
 				categories: ["long-form"],
 				videoSrc: "assets/img/portfolio/fa.mp4",
 				posterSrc: "assets/img/portfolio/thumbnails/fa.jpg"
+			},
+			{
+				id: "mo",
+				title: "Creator Odyssey Branding",
+				category: "Channel Identity",
+				desc: "3D character animation and UI motion",
+				format: "format-16-9",
+				categories: ["long-form"],
+				videoSrc: "assets/img/portfolio/Mo.mp4",
+				posterSrc: "assets/img/portfolio/thumbnails/Mo.jpg"
+			},
+			{
+				id: "gif",
+				title: "Retail Investors Movement",
+				category: "Financial Motion",
+				desc: "Clean corporate typography and grid design",
+				format: "format-16-9",
+				categories: ["long-form"],
+				videoSrc: "assets/img/portfolio/GIF.mp4",
+				posterSrc: "assets/img/portfolio/thumbnails/GIF.jpg"
+			},
+			{
+				id: "you",
+				title: "Beatroot Studio Narrative",
+				category: "Editorial Cinema",
+				desc: "Documentary pacing, sound design and kinetic cuts",
+				format: "format-16-9",
+				categories: ["long-form"],
+				videoSrc: "assets/img/portfolio/you.mp4",
+				posterSrc: "assets/img/portfolio/thumbnails/you.jpg"
 			}
 		];
 
 		var shortFormProjects = [
 			{
 				id: "twi",
-				title: "The Recession Blueprint",
-				category: "Explainer Reel",
-				desc: "Kinetic document motion and data storytelling",
+				title: "Data Narrative Breakdown",
+				category: "Financial Explainer Reel",
+				desc: "High-speed document animation and kinetic typography",
 				format: "format-9-16",
 				categories: ["short-form"],
 				videoSrc: "assets/img/portfolio/twi.mp4",
@@ -229,16 +239,6 @@ Author: Theme-Junction
 				categories: ["short-form"],
 				videoSrc: "assets/img/portfolio/Com.mp4",
 				posterSrc: "assets/img/portfolio/thumbnails/com_reel.jpg"
-			},
-			{
-				id: "recession2",
-				title: "Data Narrative Breakdown",
-				category: "Financial Explainer Reel",
-				desc: "High-speed document animation and kinetic typography",
-				format: "format-9-16",
-				categories: ["short-form"],
-				videoSrc: "assets/img/portfolio/twi.mp4",
-				posterSrc: "assets/img/portfolio/thumbnails/twi.jpg"
 			}
 		];
 
@@ -246,79 +246,11 @@ Author: Theme-Junction
 		var youtubeProjects = longFormProjects;
 		var reelsProjects = shortFormProjects;
 
-		// Dedicated Short Form showcase list (excludes Data Narration / Recession Blueprint)
-		var shortFormOnlyProjects = [
-			shortFormProjects[1], // nike: Shoe Dog – Nike Origin
-			shortFormProjects[2], // chemical: Chemical Attack VFX
-			shortFormProjects[3], // mindset: Time & Mindset Philosophy
-			shortFormProjects[4]  // focus: Focus Is Growth
-		];
-
 		var projectsMap = {};
 		longFormProjects.concat(shortFormProjects).forEach(function (p) {
 			projectsMap[p.id] = p;
 		});
-
-		function buildCardMarkup(item, isClone) {
-			var cloneAttr = isClone ? ' tabindex="-1" aria-hidden="true"' : ' tabindex="0" role="button" aria-label="Watch video: ' + item.title + '"';
-			var descMarkup = item.desc ? '<p class="meta-desc">' + item.desc + '</p>' : '';
-			return '<div class="portfolio-card ' + item.format + ' ' + item.categories.join(' ') + '" data-id="' + item.id + '"' + cloneAttr + '>' +
-				'<div class="image-box">' +
-					'<video poster="' + item.posterSrc + '" autoplay loop muted playsinline preload="auto">' +
-						'<source src="' + item.videoSrc + '" type="video/mp4">' +
-					'</video>' +
-					'<div class="portfolio-meta">' +
-						'<div class="meta-inner">' +
-							'<span class="meta-category">' + item.category + '</span>' +
-							'<h3 class="meta-title">' + item.title + '</h3>' +
-							descMarkup +
-						'</div>' +
-						'<div class="meta-action">' +
-							'<i class="fa-solid fa-arrow-up-right"></i>' +
-						'</div>' +
-					'</div>' +
-				'</div>' +
-			'</div>';
-		}
-
-		function getFilteredRows(filterVal) {
-			if (filterVal === "short-form" || filterVal === ".short-form" || filterVal === "reels" || filterVal === ".reels") {
-				// STRICTLY 9:16 SHORT FORM ONLY (SINGLE LAYER OF REAL 9:16 WORKS)
-				// Excludes: Data Narration / Data Narrative project & The Recession Blueprint
-				return {
-					row1: shortFormOnlyProjects.concat(shortFormOnlyProjects),
-					row2: []
-				};
-			} else if (filterVal === "long-form" || filterVal === ".long-form" || filterVal === "youtube" || filterVal === ".youtube") {
-				// STRICTLY 16:9 LONG FORM ONLY
-				return {
-					row1: [longFormProjects[0], longFormProjects[1], longFormProjects[2], longFormProjects[3]], // estate, creator, burn, mo
-					row2: [longFormProjects[4], longFormProjects[5], longFormProjects[6], longFormProjects[7]]  // sim, gif, skyfall, animation
-				};
-			} else {
-				// ALL (Harmonious alternating 16:9 Landscape and 9:16 Portrait across both rows)
-				return {
-					row1: [
-						longFormProjects[0], // 16:9 Estate
-						shortFormProjects[0], // 9:16 Twi
-						longFormProjects[1], // 16:9 Creator
-						shortFormProjects[1], // 9:16 Nike
-						longFormProjects[2], // 16:9 Burn
-						shortFormProjects[3], // 9:16 Mindset
-						longFormProjects[3]  // 16:9 Mo
-					],
-					row2: [
-						shortFormProjects[2], // 9:16 Chemical
-						longFormProjects[4], // 16:9 Sim
-						shortFormProjects[4], // 9:16 Focus
-						longFormProjects[5], // 16:9 Gif
-						shortFormProjects[5], // 9:16 Recession2
-						longFormProjects[6], // 16:9 Skyfall
-						longFormProjects[7]  // 16:9 Animation
-					]
-				};
-			}
-		}
+		projectsMap["recession2"] = projectsMap["twi"];
 
 		function bulkPlayVideos($container) {
 			var $target = $container || $("#portfolio-showcase");
@@ -336,35 +268,27 @@ Author: Theme-Junction
 		}
 
 		function updateShowcaseGrid(filterVal) {
-			var rows = getFilteredRows(filterVal);
 			var $showcase = $("#portfolio-showcase");
-			var isShortForm = (filterVal === "short-form" || filterVal === ".short-form" || filterVal === "reels" || filterVal === ".reels");
+			var $allWrapper = $("#all-showcase-wrapper");
+			var $longWrapper = $("#long-form-carousel-wrapper");
+			var $shortRow = $("#short-form-static-row");
 
 			$showcase.addClass("is-switching");
 			setTimeout(function () {
-				$(".portfolio-marquee-row").removeClass("is-paused");
-
-				if (isShortForm) {
-					$showcase.addClass("is-single-row");
+				if (filterVal === "short-form" || filterVal === ".short-form") {
+					$allWrapper.hide();
+					$longWrapper.hide();
+					$shortRow.css("display", "flex");
+				} else if (filterVal === "long-form" || filterVal === ".long-form") {
+					$allWrapper.hide();
+					$longWrapper.show();
+					$shortRow.hide();
 				} else {
-					$showcase.removeClass("is-single-row");
-				}
-
-				var $r1Orig = $showcase.find('.portfolio-marquee-row[data-row="1"] .marquee-original').empty();
-				var $r1Clone = $showcase.find('.portfolio-marquee-row[data-row="1"] .marquee-clone').empty();
-				rows.row1.forEach(function (item) {
-					$r1Orig.append(buildCardMarkup(item, false));
-					$r1Clone.append(buildCardMarkup(item, true));
-				});
-
-				var $r2Row = $showcase.find('.portfolio-marquee-row[data-row="2"]');
-				var $r2Orig = $r2Row.find('.marquee-original').empty();
-				var $r2Clone = $r2Row.find('.marquee-clone').empty();
-				if (!isShortForm && rows.row2 && rows.row2.length) {
-					rows.row2.forEach(function (item) {
-						$r2Orig.append(buildCardMarkup(item, false));
-						$r2Clone.append(buildCardMarkup(item, true));
-					});
+					// ALL: Two-layer mixed moving showcase
+					$allWrapper.css("display", "flex");
+					$longWrapper.hide();
+					$shortRow.hide();
+					$(".portfolio-marquee-row").removeClass("is-paused");
 				}
 
 				bulkPlayVideos($showcase);
@@ -601,6 +525,85 @@ Author: Theme-Junction
 				}
 			});
 		});
+
+		// Long Form 3x3 Grid Carousel Drag / Swipe & Page Sliding
+		(function initLongFormCarousel() {
+			var $wrapper = $("#long-form-carousel-wrapper");
+			var $track = $("#long-form-carousel-track");
+			if (!$wrapper.length || !$track.length) return;
+
+			var currentPage = 0;
+			var isDown = false;
+			var startX = 0;
+			var currentTranslate = 0;
+			var prevTranslate = 0;
+			var dragDist = 0;
+
+			function getTotalPages() {
+				return $track.find(".long-form-grid-page").length || 1;
+			}
+
+			function setPage(pageIndex, animate) {
+				var total = getTotalPages();
+				if (pageIndex < 0) pageIndex = 0;
+				if (pageIndex >= total) pageIndex = total - 1;
+				currentPage = pageIndex;
+
+				var pageWidth = $wrapper.width();
+				currentTranslate = -currentPage * pageWidth;
+				prevTranslate = currentTranslate;
+
+				if (animate) {
+					$track.removeClass("is-dragging");
+				} else {
+					$track.addClass("is-dragging");
+				}
+				$track.css("transform", "translateX(" + currentTranslate + "px)");
+			}
+
+			$wrapper.on("pointerdown", function (e) {
+				if (e.pointerType === "mouse" && e.button !== 0) return;
+				if (getTotalPages() <= 1) return;
+				isDown = true;
+				hasDragged = false;
+				dragDist = 0;
+				startX = e.clientX;
+				$wrapper.addClass("is-dragging");
+				$track.addClass("is-dragging");
+			});
+
+			$(window).on("pointermove", function (e) {
+				if (!isDown) return;
+				var deltaX = e.clientX - startX;
+				dragDist = deltaX;
+				if (Math.abs(deltaX) > 8) {
+					hasDragged = true;
+				}
+				var newTranslate = prevTranslate + deltaX;
+				$track.css("transform", "translateX(" + newTranslate + "px)");
+			});
+
+			$(window).on("pointerup pointercancel", function () {
+				if (!isDown) return;
+				isDown = false;
+				$wrapper.removeClass("is-dragging");
+				$track.removeClass("is-dragging");
+
+				var threshold = Math.min(120, $wrapper.width() * 0.15);
+				if (dragDist < -threshold && currentPage < getTotalPages() - 1) {
+					setPage(currentPage + 1, true);
+				} else if (dragDist > threshold && currentPage > 0) {
+					setPage(currentPage - 1, true);
+				} else {
+					setPage(currentPage, true);
+				}
+				dragDist = 0;
+			});
+
+			$(window).on("resize", function () {
+				setPage(currentPage, false);
+			});
+		})();
 
 		/*------------------------------------------------------
   	/ Testimonial Carousel
